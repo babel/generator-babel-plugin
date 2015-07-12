@@ -1,6 +1,6 @@
 # generator-babel-plugin [![Build Status](https://secure.travis-ci.org/thejameskyle/generator-babel-plugin.png?branch=master)](https://travis-ci.org/thejameskyle/generator-babel-plugin)
 
-> [Yeoman](http://yeoman.io) generator
+Babel Plugin generator for Yeoman.
 
 ## Usage
 
