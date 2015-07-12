@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "description": "Yeoman generator",
   "license": "MIT",
-  "main": "plugin/index.js",
+  "main": "app/index.js",
   "repository": "thejameskyle/generator-babel-plugin",
   "author": {
     "name": "James Kyle",
