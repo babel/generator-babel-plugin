@@ -79,14 +79,15 @@ module.exports = yeoman.generators.Base.extend({
       repository: this.props.repository,
       license: this.props.license,
       author: this.props.authorName + ' <' + this.props.authorEmail + '>',
-      main: 'lib/index.js',
+      main: 'dist/index.js',
       devDependencies: {
-        'babel-core': '^6.0.0',
+        'babel-core': '^6.3.17',
         'babel-preset-es2015': '^6.3.13',
         'babel-preset-stage-0': '^6.3.13',
         mocha: '^2.2.5'
       },
       scripts: {
+        'prepublish': 'babel src/index.js > dist/index.js',
         'test': 'mocha --compilers js:babel-core/register'
       },
       keywords: this.props.keywords
