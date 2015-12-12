@@ -25,6 +25,7 @@ describe('babel-plugin:app', function () {
       '.gitignore',
       '.npmignore',
       '.travis.yml',
+      '.babelrc',
       'package.json',
       'README.md',
       'src/index.js',

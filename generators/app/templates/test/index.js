@@ -1,7 +1,7 @@
 import path from "path";
 import fs from "fs";
 import assert from "assert";
-import babel from "babel";
+import * as babel from "babel-core";
 import plugin from "../src/index";
 
 function trim(str) {
@@ -18,7 +18,7 @@ describe("<%= description %>", () => {
 
     it(`should ${caseName.split("-").join(" ")}`, () => {
       const actual = babel.transformFileSync(actualFile, {
-        plugins: [plugin]
+        plugins: [plugin(babel)]
       }).code;
       const expected = fs.readFileSync(expectedFile).toString();
 
