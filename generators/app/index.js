@@ -88,7 +88,7 @@ module.exports = yeoman.generators.Base.extend({
       },
       scripts: {
         'prepublish': 'babel src/index.js > dist/index.js',
-        'test': 'mocha --compilers js:babel-core/register'
+        'test': 'mocha --compilers js:babel-register'
       },
       keywords: this.props.keywords
     };
@@ -106,8 +106,8 @@ module.exports = yeoman.generators.Base.extend({
     );
 
     this.fs.copy(
-        this.templatePath('babelrc'),
-        this.destinationPath('.babelrc')
+      this.templatePath('babelrc'),
+      this.destinationPath('.babelrc')
     );
 
     this.fs.copy(
