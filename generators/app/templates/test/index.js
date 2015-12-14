@@ -1,26 +1,24 @@
-import path from "path";
-import fs from "fs";
-import assert from "assert";
-import * as babel from "babel-core";
-import plugin from "../src/index";
+import path from 'path';
+import fs from 'fs';
+import assert from 'assert';
+import { transformFileSync } from 'babel-core';
+import plugin from '../src';
 
 function trim(str) {
-  return str.replace(/^\s+|\s+$/, "");
+  return str.replace(/^\s+|\s+$/, '');
 }
 
-describe("<%= description %>", () => {
-  const fixturesDir = path.join(__dirname, "fixtures");
+describe('<%= description %>', () => {
+  const fixturesDir = path.join(__dirname, 'fixtures');
+  fs.readdirSync(fixturesDir).map((caseName) => {
+    it(`should ${caseName.split('-').join(' ')}`, () => {
+      const fixtureDir = path.join(fixturesDir, caseName);
+      const actualPath = path.join(fixtureDir, 'actual.js');
+      const actual = transformFileSync(actualPath).code;
 
-  fs.readdirSync(fixturesDir).map(caseName => {
-    const fixtureDir = path.join(fixturesDir, caseName);
-    const actualFile = path.join(fixtureDir, "actual.js");
-    const expectedFile = path.join(fixtureDir, "expected.js");
-
-    it(`should ${caseName.split("-").join(" ")}`, () => {
-      const actual = babel.transformFileSync(actualFile, {
-        plugins: [plugin(babel)]
-      }).code;
-      const expected = fs.readFileSync(expectedFile).toString();
+      const expected = fs.readFileSync(
+          path.join(fixtureDir, 'expected.js')
+      ).toString();
 
       assert.equal(trim(actual), trim(expected));
     });
