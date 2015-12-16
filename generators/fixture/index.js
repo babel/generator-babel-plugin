@@ -19,5 +19,9 @@ module.exports = yeoman.generators.Base.extend({
       this.templatePath('expected.js'),
       this.destinationPath('test/fixtures/' + this.arguments[0] + '/expected.js')
     );
+    this.fs.copy(
+        this.templatePath('babelrc'),
+        this.destinationPath('test/fixtures/' + this.arguments[0] + '/.babelrc')
+    );
   }
 });

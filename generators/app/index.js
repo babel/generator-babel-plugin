@@ -81,14 +81,17 @@ module.exports = yeoman.generators.Base.extend({
       author: this.props.authorName + ' <' + this.props.authorEmail + '>',
       main: 'lib/index.js',
       devDependencies: {
-        babel: '^5.6.0',
+        'babel-core': '^6.3.17',
+        'babel-preset-es2015': '^6.3.13',
+        'babel-preset-stage-0': '^6.3.13',
         mocha: '^2.2.5'
       },
-      scripts: {
-        build: 'babel-plugin build',
-        push: 'babel-plugin publish',
-        test: 'babel-plugin test',
-        'test-mocha': 'mocha --compilers js:babel/register'
+      "scripts": {
+        "clean": "rm -rf lib",
+        "build": "babel src -d lib",
+        "test": "mocha --compilers js:babel-register",
+        "test:watch": "npm run test -- --watch",
+        "prepublish": "npm run clean && npm run build"
       },
       keywords: this.props.keywords
     };
@@ -103,6 +106,11 @@ module.exports = yeoman.generators.Base.extend({
     this.fs.copy(
       this.templatePath('npmignore'),
       this.destinationPath('.npmignore')
+    );
+
+    this.fs.copy(
+      this.templatePath('babelrc'),
+      this.destinationPath('.babelrc')
     );
 
     this.fs.copy(

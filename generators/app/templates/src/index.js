@@ -1,6 +1,6 @@
-export default function({ Plugin, types: t }) {
-  return new Plugin("<%= name %>", {
+export default function({types: t }) {
+  return {
     visitor: {
     }
-  });
+  };
 }
