@@ -23,6 +23,8 @@ If you want to create additional fixtures in your tests:
 $ yo babel-plugin:fixture name-of-fixture
 ```
 
+To understand babel plugin development in more detail see the [babel plugin handbook](https://github.com/thejameskyle/babel-handbook/blob/master/translations/en/plugin-handbook.md)
+
 ## License
 
 MIT
