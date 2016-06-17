@@ -88,7 +88,7 @@ module.exports = yeoman.generators.Base.extend({
       },
       "scripts": {
         "clean": "rm -rf lib",
-        "build": "babel src -d lib",
+        "build": "babel src -d lib && echo \"\nmodule.exports = exports['default'];\" >> lib/index.js",
         "test": "mocha --compilers js:babel-register",
         "test:watch": "npm run test -- --watch",
         "prepublish": "npm run clean && npm run build"
