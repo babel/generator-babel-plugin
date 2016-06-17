@@ -80,6 +80,9 @@ module.exports = yeoman.generators.Base.extend({
       license: this.props.license,
       author: this.props.authorName + ' <' + this.props.authorEmail + '>',
       main: 'lib/index.js',
+      dependencies: {
+        'babel-runtime': '^6.9.2'
+      },
       devDependencies: {
         'babel-cli': '^6.4.5',
         'babel-preset-es2015': '^6.3.13',
