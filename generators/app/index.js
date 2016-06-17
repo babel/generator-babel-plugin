@@ -84,11 +84,13 @@ module.exports = yeoman.generators.Base.extend({
         'babel-runtime': '^6.9.2'
       },
       devDependencies: {
-        'babel-cli': '^6.4.5',
-        'babel-preset-es2015': '^6.3.13',
-        'babel-preset-stage-0': '^6.3.13',
+        'babel-cli': '^6.9.0',
+        'babel-core': '^6.9.0',
         'babel-plugin-transform-runtime': '^6.9.0',
-        mocha: '^2.2.5'
+        'babel-preset-es2015': '^6.9.0',
+        'babel-preset-stage-0': '^6.5.0',
+        'babel-register': '^6.9.0',
+        mocha: '^2.5.3'
       },
       "scripts": {
         "clean": "rm -rf lib",
