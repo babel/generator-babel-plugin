@@ -82,8 +82,10 @@ module.exports = yeoman.generators.Base.extend({
       main: 'lib/index.js',
       devDependencies: {
         'babel-cli': '^6.9.0',
+        'babel-core': '^6.9.0',
         'babel-preset-es2015': '^6.9.0',
         'babel-preset-stage-0': '^6.5.0',
+        'babel-register': '^6.9.0',
         mocha: '^2.5.3'
       },
       "scripts": {
