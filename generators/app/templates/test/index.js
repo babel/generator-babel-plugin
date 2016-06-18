@@ -11,8 +11,10 @@ function trim(str) {
 describe('<%= description %>', () => {
   const fixturesDir = path.join(__dirname, 'fixtures');
   fs.readdirSync(fixturesDir).map((caseName) => {
+    const fixtureDir = path.join(fixturesDir, caseName);
+    if (!fs.statSync(fixtureDir).isDirectory()) return;
+    
     it(`should ${caseName.split('-').join(' ')}`, () => {
-      const fixtureDir = path.join(fixturesDir, caseName);
       const actualPath = path.join(fixtureDir, 'actual.js');
       const actual = transformFileSync(actualPath).code;
 
