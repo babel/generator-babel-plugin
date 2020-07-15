@@ -31,4 +31,15 @@ describe('babel-plugin:app', function () {
       'test/index.js'
     ]);
   });
+
+  it('populates package.json correctly', function () {
+    assert.jsonFileContent('package.json', {
+      name: 'babel-plugin-do-something-really-awesome',
+      version: '0.0.0',
+      description: 'A plugin that does a really cool thing',
+      repository: 'my-username/babel-plugin-do-something-really-awesome',
+      author: 'Oswald ThatEndsWald <oswald@thatendswald.com>',
+      keywords: ['foo', 'bar']
+    });
+  });
 });

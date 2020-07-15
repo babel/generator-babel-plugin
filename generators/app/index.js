@@ -50,10 +50,7 @@ module.exports = class extends Generator {
     }, {
       name: 'keywords',
       message: 'Key your keywords (comma to split)',
-      when: !this.pkg.keywords,
-      filter: function(keywords) {
-        return _.uniq(_.words(keywords).concat(['babel-plugin']))
-      }
+      when: !this.pkg.keywords
     }];
 
     this.prompt(prompts).then(function (props) {
@@ -65,13 +62,17 @@ module.exports = class extends Generator {
         this.props.repository = props.githubUsername + '/' + this.props.githubRepoName;
       }
 
+      if (props.keywords) {
+        this.props.keywords = _.uniq(_.words(props.keywords).concat(['babel-plugin']));
+      }
+
       done();
     }.bind(this));
   }
 
   writing() {
     var pkgJsonFields = {
-      name: this.githubRepoName,
+      name: this.props.githubRepoName,
       version: '0.0.0',
       description: this.props.description,
       repository: this.props.repository,
