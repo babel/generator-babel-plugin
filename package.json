@@ -1,6 +1,6 @@
 {
   "name": "generator-babel-plugin",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "description": "Yeoman generator",
   "license": "MIT",
   "main": "app/index.js",
