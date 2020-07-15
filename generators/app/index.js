@@ -1,7 +1,8 @@
 'use strict';
-var Generator = require('yeoman-generator');
-var path = require('path');
-var _ = require('lodash');
+
+const Generator = require('yeoman-generator');
+const path = require('path');
+const _ = require('lodash');
 
 function stripBabelPlugin(str) {
   return str.replace(/^babel-plugin-/, '');
@@ -15,10 +16,7 @@ module.exports = class extends Generator {
   }
 
   prompting() {
-    var self = this;
-    var done = this.async();
-
-    var prompts = [{
+    const prompts = [{
       name: 'name',
       message: 'Plugin Name',
       default: stripBabelPlugin(path.basename(process.cwd())),
@@ -53,7 +51,7 @@ module.exports = class extends Generator {
       when: !this.pkg.keywords
     }];
 
-    this.prompt(prompts).then(function (props) {
+    return this.prompt(prompts).then((props) => {
       this.props = _.extend(this.props, props);
 
       this.props.githubRepoName = 'babel-plugin-' + this.props.name;
@@ -63,13 +61,11 @@ module.exports = class extends Generator {
       }
 
       this.props.keywords = _.uniq(_.words(props.keywords).concat(['babel-plugin']));
-
-      done();
-    }.bind(this));
+    });
   }
 
   writing() {
-    var pkgJsonFields = {
+    const pkgJsonFields = {
       name: this.props.githubRepoName,
       version: '0.0.0',
       description: this.props.description,
@@ -134,7 +130,7 @@ module.exports = class extends Generator {
     );
 
     // The file
-    var testIndex = this.fs.read(this.templatePath('test/index.js'));
+    let testIndex = this.fs.read(this.templatePath('test/index.js'));
     testIndex = testIndex.replace('<%= description %>', this.props.description);
     this.fs.write(this.destinationPath('test/index.js'), testIndex);
   }
