@@ -71,7 +71,7 @@ module.exports = class extends Generator {
       description: this.props.description,
       repository: this.props.repository,
       license: this.props.license,
-      author: this.props.authorName + ' <' + this.props.authorEmail + '>',
+      author: this.getAuthor(),
       main: 'lib/index.js',
       dependencies: {
         '@babel/runtime': '^7.10.5'
@@ -139,5 +139,18 @@ module.exports = class extends Generator {
 
   install() {
     this.npmInstall();
+  }
+
+  getAuthor() {
+    if (this.props.authorName && this.props.authorEmail) {
+      return `${this.props.authorName} <${this.props.authorEmail}>`;
+    }
+
+    if (this.props.authorName) {
+      return this.props.authorName;
+    }
+
+    // author requires at least a name
+    return undefined;
   }
 };
