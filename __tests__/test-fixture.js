@@ -14,8 +14,8 @@ describe('BabelPlugin:generators/fixture', () => {
 
   it('creates files', () => {
     assert.file([
-      'test/fixtures/an-example/actual.js',
-      'test/fixtures/an-example/expected.js'
+      '__tests__/fixtures/an-example/actual.js',
+      '__tests__/fixtures/an-example/expected.js'
     ]);
   });
 });

@@ -28,7 +28,7 @@ describe('babel-plugin:app', () => {
       'package.json',
       'README.md',
       'src/index.js',
-      'test/index.js'
+      '__tests__/index.js'
     ]);
   });
 

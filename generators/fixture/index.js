@@ -15,15 +15,15 @@ module.exports = class extends Generator {
   writing() {
     this.fs.copy(
       this.templatePath('actual.js'),
-      this.destinationPath('test/fixtures/' + this.arguments[0] + '/actual.js')
+      this.destinationPath('__tests__/fixtures/' + this.arguments[0] + '/actual.js')
     );
     this.fs.copy(
       this.templatePath('expected.js'),
-      this.destinationPath('test/fixtures/' + this.arguments[0] + '/expected.js')
+      this.destinationPath('__tests__/fixtures/' + this.arguments[0] + '/expected.js')
     );
     this.fs.copy(
       this.templatePath('babelrc'),
-      this.destinationPath('test/fixtures/' + this.arguments[0] + '/.babelrc')
+      this.destinationPath('__tests__/fixtures/' + this.arguments[0] + '/.babelrc')
     );
   }
 }

@@ -74,23 +74,21 @@ module.exports = class extends Generator {
       author: this.props.authorName + ' <' + this.props.authorEmail + '>',
       main: 'lib/index.js',
       dependencies: {
-        'babel-runtime': '^6.9.2'
+        '@babel/runtime': '^7.10.5'
       },
       devDependencies: {
-        'babel-cli': '^6.9.0',
-        'babel-core': '^6.9.0',
-        'babel-plugin-transform-runtime': '^6.9.0',
-        'babel-preset-es2015': '^6.9.0',
-        'babel-preset-stage-0': '^6.5.0',
-        'babel-register': '^6.9.0',
-        mocha: '^2.5.3'
+        '@babel/cli': '^7.10.5',
+        '@babel/core': '^7.10.5',
+        '@babel/plugin-transform-runtime': '^7.10.5',
+        '@babel/preset-env': '^7.10.4',
+        'jest': '^26.1.0'    
       },
-      "scripts": {
-        "clean": "rm -rf lib",
-        "build": "babel src -d lib",
-        "test": "mocha --compilers js:babel-register",
-        "test:watch": "npm run test -- --watch",
-        "prepublish": "npm run clean && npm run build"
+      scripts: {
+        'clean': 'rm -rf lib',
+        'build': 'babel src -d lib',
+        'test': 'jest __tests__/index.js',
+        'test:watch': 'npm run test -- --watch',
+        'prepublish': 'npm run clean && npm run build'
       },
       keywords: this.props.keywords
     };
@@ -130,9 +128,9 @@ module.exports = class extends Generator {
     );
 
     // The file
-    let testIndex = this.fs.read(this.templatePath('test/index.js'));
+    let testIndex = this.fs.read(this.templatePath('__tests__/index.js'));
     testIndex = testIndex.replace('<%= description %>', this.props.description);
-    this.fs.write(this.destinationPath('test/index.js'), testIndex);
+    this.fs.write(this.destinationPath('__tests__/index.js'), testIndex);
   }
 
   default() {
