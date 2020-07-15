@@ -1,5 +1,5 @@
 'use strict';
-var yeoman = require('yeoman-generator');
+var Generator = require('yeoman-generator');
 var path = require('path');
 var _ = require('lodash');
 
@@ -7,13 +7,14 @@ function stripBabelPlugin(str) {
   return str.replace(/^babel-plugin-/, '');
 }
 
-module.exports = yeoman.generators.Base.extend({
-  initializing: function() {
+module.exports = class extends Generator {
+  constructor(args, opts) {
+    super(args, opts);
     this.pkg = this.fs.readJSON(this.destinationPath('package.json'), {});
     this.props = {};
-  },
+  }
 
-  prompting: function () {
+  prompting() {
     var self = this;
     var done = this.async();
 
@@ -55,7 +56,7 @@ module.exports = yeoman.generators.Base.extend({
       }
     }];
 
-    this.prompt(prompts, function (props) {
+    this.prompt(prompts).then(function (props) {
       this.props = _.extend(this.props, props);
 
       this.props.githubRepoName = 'babel-plugin-' + this.props.name;
@@ -66,9 +67,9 @@ module.exports = yeoman.generators.Base.extend({
 
       done();
     }.bind(this));
-  },
+  }
 
-  writing: function() {
+  writing() {
     var pkgJsonFields = {
       name: this.githubRepoName,
       version: '0.0.0',
@@ -137,15 +138,13 @@ module.exports = yeoman.generators.Base.extend({
     var testIndex = this.fs.read(this.templatePath('test/index.js'));
     testIndex = testIndex.replace('<%= description %>', this.props.description);
     this.fs.write(this.destinationPath('test/index.js'), testIndex);
-  },
+  }
 
-  default: function() {
-    this.composeWith('babel-plugin:fixture', { arguments: 'example' }, {
-      local: require.resolve('../fixture/')
-    });
-  },
+  default() {
+    this.composeWith(require.resolve('../fixture/'), { arguments: 'example' });
+  }
 
-  install: function () {
+  install() {
     this.installDependencies();
   }
-});
+};

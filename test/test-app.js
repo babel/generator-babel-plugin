@@ -1,9 +1,8 @@
 'use strict';
 
 var path = require('path');
-var assert = require('yeoman-generator').assert;
-var helpers = require('yeoman-generator').test;
-var os = require('os');
+var assert = require('yeoman-assert');
+var helpers = require('yeoman-test');
 
 describe('babel-plugin:app', function () {
   before(function (done) {
