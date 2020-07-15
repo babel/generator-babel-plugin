@@ -1,11 +1,11 @@
 'use strict';
 
-var path = require('path');
-var assert = require('yeoman-assert');
-var helpers = require('yeoman-test');
+const path = require('path');
+const assert = require('yeoman-assert');
+const helpers = require('yeoman-test');
 
-describe('babel-plugin:app', function () {
-  before(function (done) {
+describe('babel-plugin:app', () => {
+  beforeAll((done) => {
     helpers.run(path.join(__dirname, '../generators/app'))
       .withOptions({ skipInstall: true })
       .withPrompts({
@@ -19,7 +19,7 @@ describe('babel-plugin:app', function () {
       .on('end', done);
   });
 
-  it('creates files', function () {
+  it('creates files', () => {
     assert.file([
       '.gitignore',
       '.npmignore',
@@ -32,7 +32,7 @@ describe('babel-plugin:app', function () {
     ]);
   });
 
-  it('populates package.json correctly', function () {
+  it('populates package.json correctly', () => {
     assert.jsonFileContent('package.json', {
       name: 'babel-plugin-do-something-really-awesome',
       version: '0.0.0',
