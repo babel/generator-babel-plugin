@@ -62,9 +62,7 @@ module.exports = class extends Generator {
         this.props.repository = props.githubUsername + '/' + this.props.githubRepoName;
       }
 
-      if (props.keywords) {
-        this.props.keywords = _.uniq(_.words(props.keywords).concat(['babel-plugin']));
-      }
+      this.props.keywords = _.uniq(_.words(props.keywords).concat(['babel-plugin']));
 
       done();
     }.bind(this));
