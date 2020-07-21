@@ -20,10 +20,12 @@
     "yeoman-generator"
   ],
   "dependencies": {
-    "lodash": "^4.7.11",
-    "yeoman-generator": "^0.19.0"
+    "lodash": "^4.17.19",
+    "yeoman-generator": "^4.11.0"
   },
   "devDependencies": {
-    "mocha": "*"
+    "mocha": "*",
+    "yeoman-assert": "^3.1.1",
+    "yeoman-test": "^2.7.0"
   }
 }

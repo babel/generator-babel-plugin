@@ -1,5 +1,5 @@
 'use strict';
-var yeoman = require('yeoman-generator');
+var Generator = require('yeoman-generator');
 var path = require('path');
 var _ = require('lodash');
 
@@ -7,13 +7,14 @@ function stripBabelPlugin(str) {
   return str.replace(/^babel-plugin-/, '');
 }
 
-module.exports = yeoman.generators.Base.extend({
-  initializing: function() {
+module.exports = class extends Generator {
+  constructor(args, opts) {
+    super(args, opts);
     this.pkg = this.fs.readJSON(this.destinationPath('package.json'), {});
     this.props = {};
-  },
+  }
 
-  prompting: function () {
+  prompting() {
     var self = this;
     var done = this.async();
 
@@ -49,13 +50,10 @@ module.exports = yeoman.generators.Base.extend({
     }, {
       name: 'keywords',
       message: 'Key your keywords (comma to split)',
-      when: !this.pkg.keywords,
-      filter: function(keywords) {
-        return _.uniq(_.words(keywords).concat(['babel-plugin']))
-      }
+      when: !this.pkg.keywords
     }];
 
-    this.prompt(prompts, function (props) {
+    this.prompt(prompts).then(function (props) {
       this.props = _.extend(this.props, props);
 
       this.props.githubRepoName = 'babel-plugin-' + this.props.name;
@@ -64,13 +62,15 @@ module.exports = yeoman.generators.Base.extend({
         this.props.repository = props.githubUsername + '/' + this.props.githubRepoName;
       }
 
+      this.props.keywords = _.uniq(_.words(props.keywords).concat(['babel-plugin']));
+
       done();
     }.bind(this));
-  },
+  }
 
-  writing: function() {
+  writing() {
     var pkgJsonFields = {
-      name: this.githubRepoName,
+      name: this.props.githubRepoName,
       version: '0.0.0',
       description: this.props.description,
       repository: this.props.repository,
@@ -137,15 +137,13 @@ module.exports = yeoman.generators.Base.extend({
     var testIndex = this.fs.read(this.templatePath('test/index.js'));
     testIndex = testIndex.replace('<%= description %>', this.props.description);
     this.fs.write(this.destinationPath('test/index.js'), testIndex);
-  },
-
-  default: function() {
-    this.composeWith('babel-plugin:fixture', { arguments: 'example' }, {
-      local: require.resolve('../fixture/')
-    });
-  },
-
-  install: function () {
-    this.installDependencies();
   }
-});
+
+  default() {
+    this.composeWith(require.resolve('../fixture/'), { arguments: 'example' });
+  }
+
+  install() {
+    this.npmInstall();
+  }
+};

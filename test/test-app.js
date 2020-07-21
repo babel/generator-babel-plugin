@@ -1,9 +1,8 @@
 'use strict';
 
 var path = require('path');
-var assert = require('yeoman-generator').assert;
-var helpers = require('yeoman-generator').test;
-var os = require('os');
+var assert = require('yeoman-assert');
+var helpers = require('yeoman-test');
 
 describe('babel-plugin:app', function () {
   before(function (done) {
@@ -31,5 +30,16 @@ describe('babel-plugin:app', function () {
       'src/index.js',
       'test/index.js'
     ]);
+  });
+
+  it('populates package.json correctly', function () {
+    assert.jsonFileContent('package.json', {
+      name: 'babel-plugin-do-something-really-awesome',
+      version: '0.0.0',
+      description: 'A plugin that does a really cool thing',
+      repository: 'my-username/babel-plugin-do-something-really-awesome',
+      author: 'Oswald ThatEndsWald <oswald@thatendswald.com>',
+      keywords: ['foo', 'bar']
+    });
   });
 });
