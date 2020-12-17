@@ -1,7 +1,8 @@
 'use strict';
-var Generator = require('yeoman-generator');
-var path = require('path');
-var _ = require('lodash');
+
+const Generator = require('yeoman-generator');
+const path = require('path');
+const _ = require('lodash');
 
 function stripBabelPlugin(str) {
   return str.replace(/^babel-plugin-/, '');
@@ -15,10 +16,7 @@ module.exports = class extends Generator {
   }
 
   prompting() {
-    var self = this;
-    var done = this.async();
-
-    var prompts = [{
+    const prompts = [{
       name: 'name',
       message: 'Plugin Name',
       default: stripBabelPlugin(path.basename(process.cwd())),
@@ -53,7 +51,7 @@ module.exports = class extends Generator {
       when: !this.pkg.keywords
     }];
 
-    this.prompt(prompts).then(function (props) {
+    return this.prompt(prompts).then((props) => {
       this.props = _.extend(this.props, props);
 
       this.props.githubRepoName = 'babel-plugin-' + this.props.name;
@@ -63,38 +61,34 @@ module.exports = class extends Generator {
       }
 
       this.props.keywords = _.uniq(_.words(props.keywords).concat(['babel-plugin']));
-
-      done();
-    }.bind(this));
+    });
   }
 
   writing() {
-    var pkgJsonFields = {
+    const pkgJsonFields = {
       name: this.props.githubRepoName,
       version: '0.0.0',
       description: this.props.description,
       repository: this.props.repository,
       license: this.props.license,
-      author: this.props.authorName + ' <' + this.props.authorEmail + '>',
+      author: this.getAuthor(),
       main: 'lib/index.js',
       dependencies: {
-        'babel-runtime': '^6.9.2'
+        '@babel/runtime': '^7.10.5'
       },
       devDependencies: {
-        'babel-cli': '^6.9.0',
-        'babel-core': '^6.9.0',
-        'babel-plugin-transform-runtime': '^6.9.0',
-        'babel-preset-es2015': '^6.9.0',
-        'babel-preset-stage-0': '^6.5.0',
-        'babel-register': '^6.9.0',
-        mocha: '^2.5.3'
+        '@babel/cli': '^7.10.5',
+        '@babel/core': '^7.10.5',
+        '@babel/plugin-transform-runtime': '^7.10.5',
+        '@babel/preset-env': '^7.10.4',
+        'jest': '^26.1.0'    
       },
-      "scripts": {
-        "clean": "rm -rf lib",
-        "build": "babel src -d lib",
-        "test": "mocha --compilers js:babel-register",
-        "test:watch": "npm run test -- --watch",
-        "prepublish": "npm run clean && npm run build"
+      scripts: {
+        'clean': 'rm -rf lib',
+        'build': 'babel src -d lib',
+        'test': 'jest __tests__/index.js',
+        'test:watch': 'npm run test -- --watch',
+        'prepublish': 'npm run clean && npm run build'
       },
       keywords: this.props.keywords
     };
@@ -134,9 +128,9 @@ module.exports = class extends Generator {
     );
 
     // The file
-    var testIndex = this.fs.read(this.templatePath('test/index.js'));
+    let testIndex = this.fs.read(this.templatePath('__tests__/index.js'));
     testIndex = testIndex.replace('<%= description %>', this.props.description);
-    this.fs.write(this.destinationPath('test/index.js'), testIndex);
+    this.fs.write(this.destinationPath('__tests__/index.js'), testIndex);
   }
 
   default() {
@@ -145,5 +139,18 @@ module.exports = class extends Generator {
 
   install() {
     this.npmInstall();
+  }
+
+  getAuthor() {
+    if (this.props.authorName && this.props.authorEmail) {
+      return `${this.props.authorName} <${this.props.authorEmail}>`;
+    }
+
+    if (this.props.authorName) {
+      return this.props.authorName;
+    }
+
+    // author requires at least a name
+    return undefined;
   }
 };

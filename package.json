@@ -11,7 +11,7 @@
     "url": "https://github.com/thejameskyle"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "jest --testPathIgnorePatterns /generators/"
   },
   "files": [
     "generators"
@@ -24,7 +24,7 @@
     "yeoman-generator": "^4.11.0"
   },
   "devDependencies": {
-    "mocha": "*",
+    "jest": "^26.1.0",
     "yeoman-assert": "^3.1.1",
     "yeoman-test": "^2.7.0"
   }

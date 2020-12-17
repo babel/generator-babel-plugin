@@ -1,7 +1,6 @@
 import * as path from 'path';
 import * as fs from 'fs';
-import assert from 'assert';
-import { transformFileSync } from 'babel-core';
+import { transformFileSync } from '@babel/core';
 
 describe('<%= description %>', () => {
   const fixturesDir = path.join(__dirname, 'fixtures');
@@ -14,10 +13,10 @@ describe('<%= description %>', () => {
       const actual = transformFileSync(actualPath).code;
 
       const expected = fs.readFileSync(
-          path.join(fixtureDir, 'expected.js')
+        path.join(fixtureDir, 'expected.js')
       ).toString();
 
-      assert.equal(actual.trim(), expected.trim());
+      expect(actual.trim()).toEqual(expected.trim());
     });
   });
 });
