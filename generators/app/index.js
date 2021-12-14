@@ -81,7 +81,7 @@ module.exports = class extends Generator {
         '@babel/core': '^7.10.5',
         '@babel/plugin-transform-runtime': '^7.10.5',
         '@babel/preset-env': '^7.10.4',
-        'jest': '^26.1.0'    
+        'jest': '^26.1.0'
       },
       scripts: {
         'clean': 'rm -rf lib',
@@ -134,7 +134,7 @@ module.exports = class extends Generator {
   }
 
   default() {
-    this.composeWith(require.resolve('../fixture/'), { arguments: 'example' });
+    this.composeWith(require.resolve('../fixture/'), { arguments: ['example'] });
   }
 
   install() {
